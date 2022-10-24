@@ -13,10 +13,22 @@ namespace Blomstra\Gdpr\Events;
 
 class Erased
 {
+    /** @var string $username */
+    public $username;
+
+    /** @var string $email */
+    public $email;
+
+    /** @var string $mode */
+    public $mode;
+
     public function __construct(
-        public string $username,
-        public string $email,
-        public string $mode
+        string $username,
+        string $email,
+        string $mode
     ) {
+        $this->$username = $username;
+        $this->$email = $email;
+        $this->$mode = $mode;
     }
 }

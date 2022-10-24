@@ -22,7 +22,7 @@ use PhpZip\ZipFile;
 
 class Tokens extends Type
 {
-    protected array $classes = [
+    protected $classes = [
         ApiKey::class,
         AccessToken::class,
         EmailToken::class,

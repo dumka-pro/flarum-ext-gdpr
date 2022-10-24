@@ -18,8 +18,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ErasureCompletedBlueprint implements BlueprintInterface, MailableInterface
 {
-    public function __construct(private ErasureRequest $request, private $username)
+    /** @var ErasureRequest $request */
+    private $request;
+
+    private $username;
+
+    public function __construct(ErasureRequest $request, $username)
     {
+        $this->request = $request;
+        $this->username = $username;
     }
 
     public function getFromUser()

@@ -23,12 +23,23 @@ use PhpZip\ZipFile;
 
 class Exporter
 {
-    protected string $storagePath;
-    protected array $types;
+    /** @var string $storagePath */
+    protected $storagePath;
+    /** @var array $types */
+    protected $types;
+    /** @var Filesystem $filesystem */
+    protected $filesystem;
+    /** @var SettingsRepositoryInterface $settings */
+    protected $settings;
+    /** @var DataProcessor $processor */
+    protected $processor;
 
-    public function __construct(protected Filesystem $filesystem, Paths $paths, protected SettingsRepositoryInterface $settings, protected DataProcessor $processor)
+    public function __construct(Filesystem $filesystem, Paths $paths, SettingsRepositoryInterface $settings, DataProcessor $processor)
     {
         $this->storagePath = $paths->storage;
+        $this->filesystem = $filesystem;
+        $this->settings = $settings;
+        $this->processor = $processor;
     }
 
     public function export(User $user): Export

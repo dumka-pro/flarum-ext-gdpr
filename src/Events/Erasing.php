@@ -15,8 +15,12 @@ use Blomstra\Gdpr\Models\ErasureRequest;
 
 class Erasing
 {
+    /** @var ErasureRequest $user */
+    public $user;
+
     public function __construct(
-        public ErasureRequest $user,
+        ErasureRequest $user
     ) {
+        $this->user = $user;
     }
 }

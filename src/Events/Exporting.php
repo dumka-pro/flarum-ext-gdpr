@@ -15,7 +15,11 @@ use Flarum\User\User;
 
 class Exporting
 {
-    public function __construct(public User $user)
+    /** @var User $user */
+    public $user;
+
+    public function __construct(User $user)
     {
+        $this->user = $user;
     }
 }

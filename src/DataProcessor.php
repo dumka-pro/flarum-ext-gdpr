@@ -22,7 +22,7 @@ final class DataProcessor
         Data\User::class,
     ];
 
-    private static array $removeUserColumns = [];
+    private static $removeUserColumns = [];
 
     public static function addType(string $type)
     {
