@@ -18,6 +18,7 @@ use Blomstra\Gdpr\Models\ErasureRequest;
 use Blomstra\Gdpr\Notifications\ErasureCompletedBlueprint;
 use Flarum\Queue\AbstractJob;
 use Flarum\User\User;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Mail\Mailer;
 use Illuminate\Database\ConnectionInterface;
@@ -84,7 +85,7 @@ class ErasureJob extends AbstractJob
     private function anonymization(User $user, DataProcessor $processor): void
     {
         foreach ($processor->types() as $type) {
-            (new $type($user))->anonymize();
+            (new $type($user, $this->schema))->anonymize();
         }
     }
 

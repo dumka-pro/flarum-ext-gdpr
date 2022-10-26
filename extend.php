@@ -37,6 +37,7 @@ return [
     (new Extend\Routes('api'))
         ->post('/gdpr/export', 'gdpr.request-export', Api\Controller\RequestExportController::class)
         ->post('/gdpr/export-json/{id}', 'gdpr.request-export-json', Api\Controller\RequestExportJsonController::class)
+        ->post('/gdpr/anonymize-user/{id}', 'gdpr.anonymize-user', Api\Controller\AnonymizeUserController::class)
         ->get('/user-erasure-requests', 'gdpr.erasure.index', Api\Controller\ListErasureRequestsController::class)
         ->post('/user-erasure-requests', 'gdpr.erasure.create', Api\Controller\RequestErasureController::class)
         ->patch('/user-erasure-requests/{id}', 'gdpr.erasure.process', Api\Controller\ProcessErasureController::class)

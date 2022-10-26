@@ -12,11 +12,12 @@
 namespace Blomstra\Gdpr\Contracts;
 
 use Flarum\User\User;
+use Illuminate\Database\Schema\Builder;
 use PhpZip\ZipFile;
 
 interface DataType
 {
-    public function __construct(User $user);
+    public function __construct(User $user, Builder $schema);
 
     public function export(ZipFile $zip): void;
 

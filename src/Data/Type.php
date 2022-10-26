@@ -13,14 +13,19 @@ namespace Blomstra\Gdpr\Data;
 
 use Blomstra\Gdpr\Contracts\DataType;
 use Flarum\User\User;
+use Illuminate\Database\Schema\Builder;
 
 abstract class Type implements DataType
 {
     /** @var User $user */
     protected $user;
 
-    public function __construct(User $user)
+    /** @var Builder $schema */
+    protected $schema;
+
+    public function __construct(User $user, Builder $schema)
     {
         $this->user = $user;
+        $this->schema = $schema;
     }
 }
