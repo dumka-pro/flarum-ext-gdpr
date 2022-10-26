@@ -18,6 +18,8 @@ use Flarum\Foundation\Paths;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\User\User;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Database\ConnectionInterface;
+use Illuminate\Database\Schema\Builder;
 use Laminas\Diactoros\Response;
 use PhpZip\ZipFile;
 
@@ -33,13 +35,16 @@ class Exporter
     protected $settings;
     /** @var DataProcessor $processor */
     protected $processor;
+    /** @var Builder $schema */
+    protected $schema;
 
-    public function __construct(Filesystem $filesystem, Paths $paths, SettingsRepositoryInterface $settings, DataProcessor $processor)
+    public function __construct(Filesystem $filesystem, Paths $paths, SettingsRepositoryInterface $settings, DataProcessor $processor, ConnectionInterface $connection)
     {
         $this->storagePath = $paths->storage;
         $this->filesystem = $filesystem;
         $this->settings = $settings;
         $this->processor = $processor;
+        $this->schema = $connection->getSchemaBuilder();
     }
 
     public function export(User $user): Export
@@ -59,7 +64,7 @@ class Exporter
 
         foreach ($this->processor->types() as $type) {
             /** @var DataType $segment */
-            $segment = new $type($user);
+            $segment = new $type($user, $this->schema);
 
             $segment->export($zip);
         }
@@ -94,7 +99,7 @@ class Exporter
 
         foreach ($this->processor->types() as $type) {
             /** @var DataType $segment */
-            $segment = new $type($user);
+            $segment = new $type($user, $this->schema);
 
             $output = array_merge($output, $segment->output());
         }
