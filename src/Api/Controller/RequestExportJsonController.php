@@ -53,6 +53,12 @@ class RequestExportJsonController implements RequestHandlerInterface
 
         $output = $this->exporter->output($user);
 
-        return new JsonResponse($output);
+        return new JsonResponse([
+            'data' => [
+                'id' => $user->id,
+                'type' => 'gdpr',
+                'attributes' => $output,
+            ],
+        ]);
     }
 }
