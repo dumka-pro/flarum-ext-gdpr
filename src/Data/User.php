@@ -27,6 +27,15 @@ class User extends Type
         );
     }
 
+    public function output(): array
+    {
+        $remove = ['id', 'password'];
+
+        $output = Arr::except($this->user->toArray(), $remove);
+
+        return ['user' => $output];
+    }
+
     public function anonymize(): void
     {
         $columns = $this->schema->getColumnListing($this->user->getTable());

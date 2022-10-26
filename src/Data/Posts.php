@@ -32,6 +32,19 @@ class Posts extends Type
             });
     }
 
+    public function output(): array
+    {
+        $output = [];
+
+        Post::query()
+            ->where('user_id', $this->user->id)
+            ->each(function (Post $post) use (&$output) {
+                $output[$post->id] = $this->sanitize($post);
+            });
+
+        return ['posts' => $output];
+    }
+
     protected function sanitize(Post $post)
     {
         return Arr::only($post->toArray(), [

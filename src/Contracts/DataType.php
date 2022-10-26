@@ -20,6 +20,8 @@ interface DataType
 
     public function export(ZipFile $zip): void;
 
+    public function output(): array;
+
     public function anonymize(): void;
 
     public function delete(): void;

@@ -47,6 +47,24 @@ class Tokens extends Type
         }
     }
 
+    public function output(): array
+    {
+        $output = [];
+
+        foreach ($this->classes as $class) {
+            $baseName = Str::afterLast($class, '\\');
+
+            $class::query()
+                ->where('user_id', $this->user->id)
+                ->each(function ($token) use (&$output, $baseName) {
+                    $id = $token->getKey();
+                    $output[$baseName][$id] = Arr::except($token->toArray(), ['user_id', 'token', 'key']);
+                });
+        }
+
+        return ['tokens' => $output];
+    }
+
     public function anonymize(): void
     {
         $this->delete();

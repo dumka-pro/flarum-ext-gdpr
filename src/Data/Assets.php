@@ -33,6 +33,17 @@ class Assets extends Type
         }
     }
 
+    public function output(): array
+    {
+        $output = [];
+
+        if ($this->user->avatar_url) {
+            $output['avatar'] = $this->user->avatar_url;
+        }
+
+        return ['assets' => $output];
+    }
+
     public function anonymize(): void
     {
         // Anonymization isn't really possible with avatars, just delete 'em.

@@ -82,6 +82,26 @@ class Exporter
         return $export;
     }
 
+    public function output(User $user): array
+    {
+        foreach ($this->processor->removableUserColumns() as $column) {
+            if ($user->{$column} !== null) {
+                $user->{$column} = null;
+            }
+        }
+
+        $output = [];
+
+        foreach ($this->processor->types() as $type) {
+            /** @var DataType $segment */
+            $segment = new $type($user);
+
+            $output = array_merge($output, $segment->output());
+        }
+
+        return $output;
+    }
+
     public function getZip(Export $export)
     {
         return new Response(
